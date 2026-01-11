@@ -107,6 +107,15 @@ const AttendanceGroup: React.FC<AttendanceGroupProps> = ({ type, onBack }) => {
       hoverColor: "hover:from-pink-600 hover:to-pink-700",
       onClick: () => window.open('https://docs.google.com/spreadsheets/d/1tyR7C7k0ot_X9AeY-0K5cLl7KNkzh6VE/edit?usp=sharing', '_blank'),
       available: true
+    },
+    {
+      title: "📥 Download Jurnal",
+      description: "Download jurnal karyawan",
+      icon: FileText,
+      color: "from-indigo-500 to-indigo-600",
+      hoverColor: "hover:from-indigo-600 hover:to-indigo-700",
+      onClick: () => window.open('https://docs.google.com/spreadsheets/d/1OYC7vPUvGdIAG3Qcec0sReYS3b_UvUU6f54LmXt4jZg/edit?usp=sharing', '_blank'),
+      available: true
     }
   ];
 
