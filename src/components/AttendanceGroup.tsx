@@ -24,7 +24,7 @@ const AttendanceGroup: React.FC<AttendanceGroupProps> = ({ type, onBack }) => {
   };
 
   const handleEmployeeAbsenClick = () => {
-    setSelectedUrl('https://forms.gle/8ayfhoum7rNCuQrT6');
+    setSelectedUrl('https://script.google.com/macros/s/AKfycbzhdkayFmo3G8ZqSGcnRoJZGKCaR1hnH2rHA12YXPEb--eRJty9RrFS-VRK53YxRPpbqQ/exec');
     setShowModal(true);
   };
 
@@ -96,7 +96,7 @@ const AttendanceGroup: React.FC<AttendanceGroupProps> = ({ type, onBack }) => {
       icon: BarChart3,
       color: "from-teal-500 to-teal-600",
       hoverColor: "hover:from-teal-600 hover:to-teal-700",
-      onClick: () => window.open('https://script.google.com/macros/s/AKfycbzhdkayFmo3G8ZqSGcnRoJZGKCaR1hnH2rHA12YXPEb--eRJty9RrFS-VRK53YxRPpbqQ/exec', '_blank'),
+      onClick: () => window.open('https://docs.google.com/spreadsheets/d/1EwhrdEzVa1dKFKWOG787R1iDc9efPxR9c0Rtn-_lBJw/edit?usp=sharing', '_blank'),
       available: true
     },
     {
