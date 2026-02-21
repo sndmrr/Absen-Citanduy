@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MapPin, ExternalLink, Sprout, Leaf, Users, ClipboardList, FileText, UserPlus, DollarSign, Zap, Settings } from 'lucide-react';
+import { MapPin, ExternalLink, Sprout, Leaf, Users, ClipboardList, FileText, UserPlus, DollarSign, Zap, Settings, Moon } from 'lucide-react';
 import LoadingScreen from './components/LoadingScreen';
 import AttendanceGroup from './components/AttendanceGroup';
 import AdminSettings from './components/AdminSettings';
@@ -150,11 +150,12 @@ function App() {
       <LoadingScreen isLoading={isLoading} />
       
       <div className={`min-h-screen bg-white relative overflow-hidden transition-all duration-1000 ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
-        {/* Modern Background with Gradient Mesh */}
-        <div className="absolute inset-0 bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(34,197,94,0.1),transparent_50%)]"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(16,185,129,0.1),transparent_50%)]"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_90%_10%,rgba(5,150,105,0.05),transparent_50%)]"></div>
+        {/* Ramadhan + Planting Background */}
+        <div className="absolute inset-0 bg-ramadhan-subtle">
+          <div className="absolute inset-0 bg-islamic-pattern"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(34,197,94,0.15),transparent_50%)]"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(251,191,36,0.1),transparent_50%)]"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_90%_10%,rgba(132,204,22,0.08),transparent_50%)]"></div>
         </div>
 
         {/* Floating Plant Elements */}
@@ -201,6 +202,25 @@ function App() {
                   e.currentTarget.src = 'https://i.postimg.cc/ZnWHPbw9/T4-T-Logo-Baru-2-1.jpg';
                 }}
               />
+            </div>
+          </div>
+
+          {/* Ramadhan Greeting */}
+          <div className="text-center mb-8 animate-fade-in">
+            <div className="relative inline-block">
+              <div className="absolute -inset-2 bg-gradient-to-r from-amber-100 to-yellow-100 blur-xl rounded-3xl opacity-50"></div>
+              <div className="relative flex items-center justify-center space-x-3 px-6 py-3 bg-white/90 backdrop-blur-md rounded-3xl shadow-xl border-2 border-amber-200">
+                <Moon className="h-6 w-6 text-amber-600 animate-pulse" />
+                <div className="text-center">
+                  <p className="text-2xl md:text-3xl font-arabic font-bold text-amber-800 mb-1" style={{ fontFamily: 'Amiri, Cairo, serif' }}>
+                    السلام عليكم ورحمة الله وبركاته
+                  </p>
+                  <p className="text-sm md:text-base text-amber-700 font-medium">
+                    Selamat datang di bulan Ramadhan yang penuh berkah 🌙
+                  </p>
+                </div>
+                <Moon className="h-6 w-6 text-amber-600 animate-pulse" />
+              </div>
             </div>
           </div>
 
