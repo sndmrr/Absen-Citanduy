@@ -3,13 +3,11 @@ import { MapPin, ExternalLink, Sprout, Leaf, Users, ClipboardList, FileText, Use
 import LoadingScreen from './components/LoadingScreen';
 import AttendanceGroup from './components/AttendanceGroup';
 import AdminSettings from './components/AdminSettings';
-import IframeModal from './components/IframeModal';
 import { getAllAppSettings, getAllButtonSettings } from './lib/supabase';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [currentView, setCurrentView] = useState<'home' | 'employee-attendance' | 'admin-settings'>('home');
-  const [isIframeModalOpen, setIsIframeModalOpen] = useState(false);
   const [photos, setPhotos] = useState({
     header: 'https://i.postimg.cc/ZnWHPbw9/T4-T-Logo-Baru-2-1.jpg',
     roster: 'https://via.placeholder.com/600x300/e5f3ff/1e40af?text=Jadwal+Roster',
@@ -118,7 +116,7 @@ function App() {
     {
       key: "employee_attendance",
       title: "📝 Absensi Karyawan",
-      onClick: () => setIsIframeModalOpen(true),
+      onClick: () => setCurrentView('employee-attendance'),
       icon: FileText,
       gradient: "from-green-500 via-emerald-600 to-teal-700",
       hoverGradient: "from-green-600 via-emerald-700 to-teal-800",
@@ -354,14 +352,6 @@ function App() {
           </div>
         </footer>
       </div>
-
-      {/* Iframe Modal */}
-      <IframeModal
-        isOpen={isIframeModalOpen}
-        onClose={() => setIsIframeModalOpen(false)}
-        src="https://script.google.com/macros/s/AKfycbzkoP4ENkrNf6sRIdh2qY7sdXCmaDw4ColVHBbTS7OsYcaM-w96XIIDDhh12D9YLZv64A/exec"
-        title="Absensi Karyawan"
-      />
     </>
   );
 }
