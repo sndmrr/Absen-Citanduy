@@ -24,7 +24,7 @@ const AttendanceGroup: React.FC<AttendanceGroupProps> = ({ type, onBack }) => {
   };
 
   const handleEmployeeAbsenClick = () => {
-    setSelectedUrl('https://script.google.com/macros/s/AKfycbzhdkayFmo3G8ZqSGcnRoJZGKCaR1hnH2rHA12YXPEb--eRJty9RrFS-VRK53YxRPpbqQ/exec');
+    setSelectedUrl('https://sites.google.com/view/absensi-karyawan-citanduy/absensi-karyawan');
     setShowModal(true);
   };
 
