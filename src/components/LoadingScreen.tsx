@@ -9,9 +9,9 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ isLoading }) => {
   if (!isLoading) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-ramadhan-subtle">
-      {/* Islamic Pattern Background */}
-      <div className="absolute inset-0 bg-islamic-pattern opacity-30"></div>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-planting-subtle">
+      {/* Nature Pattern Background */}
+      <div className="absolute inset-0 bg-nature-pattern opacity-30"></div>
       
       {/* Animated background elements - stars and moon */}
       <div className="absolute inset-0 overflow-hidden">
@@ -31,10 +31,10 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ isLoading }) => {
           </div>
         ))}
         
-        {/* Floating moon particles */}
+        {/* Floating seed particles */}
         {[...Array(6)].map((_, i) => (
           <div
-            key={`moon-${i}`}
+            key={`seed-${i}`}
             className="absolute animate-float-leaf"
             style={{
               left: `${Math.random() * 100}%`,
@@ -109,31 +109,31 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ isLoading }) => {
 
         {/* Loading text */}
         <div className="space-y-4">
-          {/* Arabic greeting */}
+          {/* Greeting */}
           <div className="mb-4 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-            <p className="text-2xl md:text-3xl font-arabic font-bold text-amber-800 mb-2" style={{ fontFamily: 'Amiri, Cairo, serif' }}>
-              بسم الله الرحمن الرحيم
+            <p className="text-2xl md:text-3xl font-bold text-green-700 mb-2">
+              Planting Trees for Tomorrow
             </p>
-            <p className="text-lg md:text-xl font-arabic text-amber-700" style={{ fontFamily: 'Amiri, Cairo, serif' }}>
-              في شهر رمضان المبارك
+            <p className="text-lg md:text-xl text-green-600">
+              Bersama Menanam Pohon Untuk Masa Depan
             </p>
           </div>
-          
+
           <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-green-700 via-emerald-600 to-amber-600 bg-clip-text text-transparent mb-3 animate-pulse">
-            🌱 Menanam Kebaikan di Bulan Suci
+            🌱 Planting Trees for Citanduy
           </h2>
           <p className="text-amber-700 text-lg font-medium animate-fade-in" style={{
             animationDelay: '0.5s'
           }}>
-            Memuat Portal Ramadhan Trees4Trees Citanduy...
+            Memuat Portal Trees4Trees Citanduy...
           </p>
           
-          {/* Progress bar with Ramadhan theme */}
+          {/* Progress bar with planting theme */}
           <div className="w-64 h-3 bg-amber-100 rounded-full mx-auto overflow-hidden shadow-inner border border-amber-200">
             <div className="h-full bg-gradient-to-r from-green-500 via-emerald-500 to-amber-500 rounded-full animate-progress shadow-sm"></div>
           </div>
           
-          {/* Loading dots with moon theme */}
+          {/* Loading dots */}
           <div className="flex justify-center space-x-2 mt-6">
             {[...Array(3)].map((_, i) => (
               <div
@@ -148,9 +148,9 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ isLoading }) => {
           </div>
         </div>
 
-        {/* Decorative elements with Ramadhan theme */}
+        {/* Decorative elements with planting theme */}
         <div className="absolute top-8 left-8">
-          <Moon className="h-10 w-10 text-amber-400 animate-pulse shadow-ramadhan-glow" />
+          <Sprout className="h-10 w-10 text-green-500 animate-pulse shadow-planting-glow" />
         </div>
         <div className="absolute top-8 right-8">
           <div className="relative">
@@ -170,7 +170,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ isLoading }) => {
         </div>
       </div>
 
-      {/* Bottom gradient with Ramadhan theme */}
+      {/* Bottom gradient with planting theme */}
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-amber-50 via-green-50 to-transparent opacity-60"></div>
     </div>
   );

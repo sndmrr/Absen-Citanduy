@@ -150,9 +150,9 @@ function App() {
       <LoadingScreen isLoading={isLoading} />
       
       <div className={`min-h-screen bg-white relative overflow-hidden transition-all duration-1000 ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
-        {/* Ramadhan + Planting Background */}
-        <div className="absolute inset-0 bg-ramadhan-subtle">
-          <div className="absolute inset-0 bg-islamic-pattern"></div>
+        {/* Planting Trees Background */}
+        <div className="absolute inset-0 bg-planting-subtle">
+          <div className="absolute inset-0 bg-nature-pattern"></div>
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(34,197,94,0.15),transparent_50%)]"></div>
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(251,191,36,0.1),transparent_50%)]"></div>
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_90%_10%,rgba(132,204,22,0.08),transparent_50%)]"></div>
@@ -205,21 +205,21 @@ function App() {
             </div>
           </div>
 
-          {/* Ramadhan Greeting */}
+          {/* Planting Trees Greeting */}
           <div className="text-center mb-8 animate-fade-in">
             <div className="relative inline-block">
-              <div className="absolute -inset-2 bg-gradient-to-r from-amber-100 to-yellow-100 blur-xl rounded-3xl opacity-50"></div>
-              <div className="relative flex items-center justify-center space-x-3 px-6 py-3 bg-white/90 backdrop-blur-md rounded-3xl shadow-xl border-2 border-amber-200">
-                <Moon className="h-6 w-6 text-amber-600 animate-pulse" />
+              <div className="absolute -inset-2 bg-gradient-to-r from-green-100 to-emerald-100 blur-xl rounded-3xl opacity-50"></div>
+              <div className="relative flex items-center justify-center space-x-3 px-6 py-3 bg-white/90 backdrop-blur-md rounded-3xl shadow-xl border-2 border-green-200">
+                <Sprout className="h-6 w-6 text-green-600 animate-pulse" />
                 <div className="text-center">
-                  <p className="text-2xl md:text-3xl font-arabic font-bold text-amber-800 mb-1" style={{ fontFamily: 'Amiri, Cairo, serif' }}>
-                    السلام عليكم ورحمة الله وبركاته
+                  <p className="text-2xl md:text-3xl font-bold text-green-800 mb-1">
+                    Planting Trees for Tomorrow
                   </p>
-                  <p className="text-sm md:text-base text-amber-700 font-medium">
-                    Selamat datang di bulan Ramadhan yang penuh berkah 🌙
+                  <p className="text-sm md:text-base text-green-700 font-medium">
+                    Bersama Menanam Pohon Untuk Masa Depan Citanduy 🌱
                   </p>
                 </div>
-                <Moon className="h-6 w-6 text-amber-600 animate-pulse" />
+                <Sprout className="h-6 w-6 text-green-600 animate-pulse" />
               </div>
             </div>
           </div>

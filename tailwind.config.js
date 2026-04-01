@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        'ramadhan': {
+        'planting': {
           'green': {
             50: '#f0fdf4',
             100: '#dcfce7',
@@ -17,7 +17,7 @@ export default {
             800: '#166534',
             900: '#14532d',
           },
-          'gold': {
+          'earth': {
             50: '#fffbeb',
             100: '#fef3c7',
             200: '#fde68a',
@@ -44,17 +44,17 @@ export default {
         }
       },
       backgroundImage: {
-        'ramadhan-gradient': 'linear-gradient(135deg, #16a34a 0%, #22c55e 25%, #84cc16 50%, #fbbf24 75%, #f59e0b 100%)',
-        'ramadhan-subtle': 'linear-gradient(135deg, rgba(22, 163, 74, 0.9) 0%, rgba(34, 197, 94, 0.8) 25%, rgba(132, 204, 22, 0.7) 50%, rgba(251, 191, 36, 0.6) 75%, rgba(245, 158, 11, 0.5) 100%)',
-        'islamic-pattern': "radial-gradient(circle at 20% 80%, rgba(251, 191, 36, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.1) 0%, transparent 50%), radial-gradient(circle at 40% 40%, rgba(34, 197, 94, 0.05) 0%, transparent 50%)",
+        'planting-gradient': 'linear-gradient(135deg, #16a34a 0%, #22c55e 25%, #84cc16 50%, #fbbf24 75%, #f59e0b 100%)',
+        'planting-subtle': 'linear-gradient(135deg, rgba(22, 163, 74, 0.9) 0%, rgba(34, 197, 94, 0.8) 25%, rgba(132, 204, 22, 0.7) 50%, rgba(251, 191, 36, 0.6) 75%, rgba(245, 158, 11, 0.5) 100%)',
+        'nature-pattern': "radial-gradient(circle at 20% 80%, rgba(251, 191, 36, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.1) 0%, transparent 50%), radial-gradient(circle at 40% 40%, rgba(34, 197, 94, 0.05) 0%, transparent 50%)",
       },
       fontFamily: {
         'arabic': ['Amiri', 'Cairo', 'serif'],
       },
       boxShadow: {
-        'ramadhan-glow': '0 0 20px rgba(251, 191, 36, 0.3)',
-        'ramadhan-glow-lg': '0 0 40px rgba(251, 191, 36, 0.5)',
-        'islamic': '0 4px 20px rgba(22, 163, 74, 0.15)',
+        'planting-glow': '0 0 20px rgba(251, 191, 36, 0.3)',
+        'planting-glow-lg': '0 0 40px rgba(251, 191, 36, 0.5)',
+        'nature': '0 4px 20px rgba(22, 163, 74, 0.15)',
       }
     },
   },
