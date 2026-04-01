@@ -149,13 +149,13 @@ function App() {
     <>
       <LoadingScreen isLoading={isLoading} />
       
-      <div className={`min-h-screen bg-white relative overflow-hidden transition-all duration-1000 ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
+      <div className={`min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-yellow-50 relative overflow-hidden transition-all duration-1000 ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
         {/* Planting Trees Background */}
-        <div className="absolute inset-0 bg-planting-subtle">
-          <div className="absolute inset-0 bg-nature-pattern"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(34,197,94,0.15),transparent_50%)]"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(251,191,36,0.1),transparent_50%)]"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_90%_10%,rgba(132,204,22,0.08),transparent_50%)]"></div>
+        <div className="absolute inset-0 bg-planting-subtle opacity-40">
+          <div className="absolute inset-0 bg-nature-pattern opacity-50"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(34,197,94,0.08),transparent_50%)]"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(251,191,36,0.05),transparent_50%)]"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_90%_10%,rgba(132,204,22,0.04),transparent_50%)]"></div>
         </div>
 
         {/* Floating Plant Elements */}
