@@ -165,36 +165,36 @@ const AttendanceGroup: React.FC<AttendanceGroupProps> = ({ type, onBack }) => {
             </p>
           </div>
 
-          <div className={`grid grid-cols-1 ${buttons.length > 2 ? 'md:grid-cols-3' : 'md:grid-cols-2'} gap-6`}>
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {buttons.map((button) => {
               const IconComponent = button.icon;
               return (
                 <button
                   key={button.title}
                   onClick={button.onClick}
-                  className={`group relative overflow-hidden rounded-2xl bg-gradient-to-br ${button.color} ${button.hoverColor} p-8 text-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 hover:-translate-y-1 border border-white/30 backdrop-blur-sm`}
+                  className={`group relative overflow-hidden rounded-xl bg-gradient-to-br ${button.color} ${button.hoverColor} p-4 sm:p-6 text-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 hover:-translate-y-1 border border-white/30 backdrop-blur-sm`}
                 >
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  
-                  <div className="relative z-10 flex flex-col items-center text-center space-y-4">
-                    <div className="p-4 bg-white/20 rounded-full transform group-hover:scale-110 transition-transform duration-200">
-                      <IconComponent className="h-12 w-12" />
+
+                  <div className="relative z-10 flex flex-col items-center text-center space-y-2 sm:space-y-3">
+                    <div className="p-2 sm:p-3 bg-white/20 rounded-full transform group-hover:scale-110 transition-transform duration-200">
+                      <IconComponent className="h-6 w-6 sm:h-8 sm:w-8" />
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold mb-2">
-                        {button.title.replace(/^[^\s]+\s/, '')} {/* Remove emoji */}
+                      <h3 className="text-sm sm:text-base font-bold mb-1 sm:mb-2">
+                        {button.title.replace(/^[^\s]+\s/, '')}
                       </h3>
-                      <p className="text-white/90 text-sm mb-3">
+                      <p className="text-white/90 text-xs sm:text-sm mb-2 hidden sm:block">
                         {button.description}
                       </p>
-                      <div className="flex items-center justify-center space-x-2">
-                        <ExternalLink className="h-4 w-4" />
+                      <div className="flex items-center justify-center space-x-1">
+                        <ExternalLink className="h-3 w-3 sm:h-4 sm:w-4" />
                         <span className="text-xs">Buka</span>
                       </div>
                     </div>
                   </div>
 
-                  <div className="absolute -right-3 -bottom-3 h-16 w-16 rounded-full bg-white/10 transform group-hover:scale-125 transition-transform duration-500"></div>
+                  <div className="absolute -right-3 -bottom-3 h-12 w-12 sm:h-16 sm:w-16 rounded-full bg-white/10 transform group-hover:scale-125 transition-transform duration-500"></div>
                 </button>
               );
             })}
