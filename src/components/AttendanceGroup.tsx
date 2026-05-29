@@ -105,7 +105,7 @@ const AttendanceGroup: React.FC<AttendanceGroupProps> = ({ type, onBack }) => {
       icon: Calendar,
       color: "from-pink-500 to-pink-600",
       hoverColor: "hover:from-pink-600 hover:to-pink-700",
-      onClick: () => window.open('https://docs.google.com/spreadsheets/d/1tyR7C7k0ot_X9AeY-0K5cLl7KNkzh6VE/edit?usp=sharing', '_blank'),
+      onClick: () => window.open('https://docs.google.com/spreadsheets/d/1BHkQdCu16X-suzxR8rBcd-_pLtyXHLUfMW30Wl5P-Ms/edit?gid=1845550008#gid=1845550008', '_blank'),
       available: true
     },
     {
