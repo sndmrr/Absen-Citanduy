@@ -213,7 +213,7 @@ function App() {
                 <Sprout className="h-6 w-6 text-green-600 animate-pulse" />
                 <div className="text-center">
                   <p className="text-2xl md:text-3xl font-bold text-green-800 mb-1">
-                    Green. Future. Now.
+                    Planting Trees for Tomorrow
                   </p>
                   <p className="text-sm md:text-base text-green-700 font-medium">
                     Bersama Menanam Pohon Untuk Masa Depan Citanduy 🌱
