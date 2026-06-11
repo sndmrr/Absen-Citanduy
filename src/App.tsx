@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { MapPin, ExternalLink, Sprout, Leaf, Users, ClipboardList, FileText, UserPlus, DollarSign, Zap, Settings, Moon } from 'lucide-react';
 import LoadingScreen from './components/LoadingScreen';
-import AttendanceGroup from './components/AttendanceGroup';
 import AdminSettings from './components/AdminSettings';
 import { getAllAppSettings, getAllButtonSettings } from './lib/supabase';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
-  const [currentView, setCurrentView] = useState<'home' | 'employee-attendance' | 'admin-settings'>('home');
+  const [currentView, setCurrentView] = useState<'home' | 'admin-settings'>('home');
   const [photos, setPhotos] = useState({
     header: 'https://i.postimg.cc/ZnWHPbw9/T4-T-Logo-Baru-2-1.jpg',
     roster: 'https://via.placeholder.com/600x300/e5f3ff/1e40af?text=Jadwal+Roster',
@@ -72,16 +71,6 @@ function App() {
     }));
   };
 
-  // Show Employee attendance group if requested
-  if (currentView === 'employee-attendance') {
-    return (
-      <AttendanceGroup 
-        type="employee"
-        onBack={() => setCurrentView('home')} 
-      />
-    );
-  }
-
   // Show admin settings if requested
   if (currentView === 'admin-settings') {
     return (
@@ -116,7 +105,8 @@ function App() {
     {
       key: "employee_attendance",
       title: "📝 Absensi Karyawan",
-      onClick: () => setCurrentView('employee-attendance'),
+      url: "https://sites.google.com/view/rekapabsencitanduy/beranda",
+      directRedirect: true,
       icon: FileText,
       gradient: "from-green-500 via-emerald-600 to-teal-700",
       hoverGradient: "from-green-600 via-emerald-700 to-teal-800",
@@ -240,10 +230,10 @@ function App() {
           {/* Button Cards */}
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-6 mb-12 max-w-7xl mx-auto">
             {buttonData.filter(btn => buttonSettings[btn.key] !== false).map((button, index) => (
-              button.onClick ? (
+              button.directRedirect ? (
                 <button
                   key={index}
-                  onClick={button.onClick}
+                  onClick={() => window.location.href = button.url!}
                   className="group relative overflow-hidden rounded-2xl md:rounded-3xl bg-white p-3 md:p-6 shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-500 hover:-translate-y-2 border border-gray-100"
                   style={{
                     animationDelay: `${index * 0.1}s`
@@ -251,11 +241,11 @@ function App() {
                 >
                   {/* Gradient Background */}
                   <div className={`absolute inset-0 bg-gradient-to-br ${button.hoverGradient} opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-2xl md:rounded-3xl`}></div>
-                  
+
                   {/* Animated Background Elements */}
                   <div className={`absolute -top-2 md:-top-4 -right-2 md:-right-4 w-12 md:w-20 h-12 md:h-20 bg-gradient-to-br ${button.gradient} rounded-full opacity-20 group-hover:opacity-40 transition-all duration-500 group-hover:scale-150`}></div>
                   <div className={`absolute -bottom-1 md:-bottom-2 -left-1 md:-left-2 w-8 md:w-12 h-8 md:h-12 bg-gradient-to-br ${button.gradient} rounded-full opacity-20 group-hover:opacity-40 transition-all duration-500 group-hover:scale-125`}></div>
-                  
+
                   <div className="relative z-10 flex flex-col items-center text-center space-y-2 md:space-y-4">
                     <div className={`w-10 md:w-16 h-10 md:h-16 bg-gradient-to-br ${button.gradient} opacity-10 rounded-xl md:rounded-2xl flex items-center justify-center group-hover:bg-white/20 transition-all duration-500 group-hover:scale-110 group-hover:rotate-6`}>
                       <button.icon className={`w-5 md:w-8 h-5 md:h-8 bg-gradient-to-br ${button.iconGradient} bg-clip-text text-transparent group-hover:text-white transition-all duration-500`} />
@@ -287,11 +277,11 @@ function App() {
                 >
                   {/* Gradient Background */}
                   <div className={`absolute inset-0 bg-gradient-to-br ${button.hoverGradient} opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-2xl md:rounded-3xl`}></div>
-                  
+
                   {/* Animated Background Elements */}
                   <div className={`absolute -top-2 md:-top-4 -right-2 md:-right-4 w-12 md:w-20 h-12 md:h-20 bg-gradient-to-br ${button.gradient} rounded-full opacity-20 group-hover:opacity-40 transition-all duration-500 group-hover:scale-150`}></div>
                   <div className={`absolute -bottom-1 md:-bottom-2 -left-1 md:-left-2 w-8 md:w-12 h-8 md:h-12 bg-gradient-to-br ${button.gradient} rounded-full opacity-20 group-hover:opacity-40 transition-all duration-500 group-hover:scale-125`}></div>
-                  
+
                   <div className="relative z-10 flex flex-col items-center text-center space-y-2 md:space-y-4">
                     <div className={`w-10 md:w-16 h-10 md:h-16 bg-gradient-to-br ${button.gradient} opacity-10 rounded-xl md:rounded-2xl flex items-center justify-center group-hover:bg-white/20 transition-all duration-500 group-hover:scale-110 group-hover:rotate-6`}>
                       <button.icon className={`w-5 md:w-8 h-5 md:h-8 bg-gradient-to-br ${button.iconGradient} bg-clip-text text-transparent group-hover:text-white transition-all duration-500`} />
