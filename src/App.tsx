@@ -233,7 +233,7 @@ function App() {
               button.directRedirect ? (
                 <button
                   key={index}
-                  onClick={() => window.location.href = button.url!}
+                  onClick={() => window.open(button.url!, '_blank')}
                   className="group relative overflow-hidden rounded-2xl md:rounded-3xl bg-white p-3 md:p-6 shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-500 hover:-translate-y-2 border border-gray-100"
                   style={{
                     animationDelay: `${index * 0.1}s`
@@ -258,8 +258,8 @@ function App() {
                         {button.description}
                       </p>
                       <div className={`flex items-center justify-center space-x-2 bg-gradient-to-r ${button.iconGradient} bg-clip-text text-transparent group-hover:text-white transition-all duration-500`}>
-                        <Zap className="w-3 md:w-4 h-3 md:h-4" />
-                        <span className="text-xs md:text-xs font-medium">Akses</span>
+                        <ExternalLink className="w-3 md:w-4 h-3 md:h-4" />
+                        <span className="text-xs md:text-xs font-medium">Buka</span>
                       </div>
                     </div>
                   </div>
