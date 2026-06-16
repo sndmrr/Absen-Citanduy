@@ -268,13 +268,14 @@ function App() {
                 </div>
                 <h3 className="info-card-title text-blue-800">Jadwal Roster</h3>
               </div>
-              <div className="info-card-img-wrap">
-                <img
-                  src={photos.roster}
-                  alt="Jadwal Roster"
-                  className="info-card-img"
+              <div className="info-card-embed-wrap">
+                <iframe
+                  src="https://docs.google.com/spreadsheets/d/e/2PACX-1vROF6TC0Nmn1L_AvaseI4_51zUVA3riOLE1BoL-jFHjeiYSN4SuOikpBjsjihbv1mEJ6mocKJS4tHWX/pubhtml?gid=1845550008&single=true&widget=true&headers=false"
+                  className="info-card-embed"
+                  title="Jadwal Roster"
                   loading="lazy"
-                  onError={(e) => { e.currentTarget.src = 'https://via.placeholder.com/600x300/e5f3ff/1e40af?text=Jadwal+Roster'; }}
+                  frameBorder="0"
+                  allowFullScreen
                 />
               </div>
             </div>

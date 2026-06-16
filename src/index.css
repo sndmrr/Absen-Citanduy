@@ -563,6 +563,20 @@ img { content-visibility: auto; }
   display: block;
 }
 
+.info-card-embed-wrap {
+  border-radius: 12px;
+  overflow: hidden;
+  background: #f9fafb;
+  position: relative;
+}
+.info-card-embed {
+  width: 100%;
+  height: 340px;
+  display: block;
+  border: none;
+  border-radius: 12px;
+}
+
 /* LOCATION */
 .location-chip {
   display: inline-flex;
