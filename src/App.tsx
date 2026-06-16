@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MapPin, ExternalLink, Sprout, Leaf, Users, ClipboardList, FileText, UserPlus, DollarSign, Zap, Settings, Moon } from 'lucide-react';
+import { MapPin, ExternalLink, Sprout, ClipboardList, FileText, UserPlus, DollarSign, Settings, ChevronRight, Calendar, BarChart3 } from 'lucide-react';
 import LoadingScreen from './components/LoadingScreen';
 import AdminSettings from './components/AdminSettings';
 import { getAllAppSettings, getAllButtonSettings } from './lib/supabase';
@@ -17,31 +17,21 @@ function App() {
   useEffect(() => {
     const initializeApp = async () => {
       try {
-        // Load photos from Supabase
         const settings = await getAllAppSettings();
         setPhotos({
           header: settings.header_photo || 'https://i.postimg.cc/ZnWHPbw9/T4-T-Logo-Baru-2-1.jpg',
           roster: settings.roster_photo || 'https://via.placeholder.com/600x300/e5f3ff/1e40af?text=Jadwal+Roster',
           payment: settings.payment_photo || 'https://via.placeholder.com/600x300/f0fdf4/16a34a?text=Info+Pembayaran'
         });
-
-        // Load button settings from Supabase
         const buttons = await getAllButtonSettings();
         const buttonMap: { [key: string]: boolean } = {};
-        buttons.forEach(btn => {
-          buttonMap[btn.button_key] = btn.is_enabled;
-        });
+        buttons.forEach(btn => { buttonMap[btn.button_key] = btn.is_enabled; });
         setButtonSettings(buttonMap);
       } catch (error) {
         console.error('Error loading app settings:', error);
       }
-
-      // Show loading screen for 3 seconds
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 3000);
+      setTimeout(() => setIsLoading(false), 3000);
     };
-
     initializeApp();
   }, []);
 
@@ -51,27 +41,20 @@ function App() {
         try {
           const buttons = await getAllButtonSettings();
           const buttonMap: { [key: string]: boolean } = {};
-          buttons.forEach(btn => {
-            buttonMap[btn.button_key] = btn.is_enabled;
-          });
+          buttons.forEach(btn => { buttonMap[btn.button_key] = btn.is_enabled; });
           setButtonSettings(buttonMap);
         } catch (error) {
           console.error('Error reloading button settings:', error);
         }
       };
-
       reloadButtonSettings();
     }
   }, [currentView]);
 
   const handlePhotoUpdate = (type: 'header' | 'roster' | 'payment', photoUrl: string) => {
-    setPhotos(prev => ({
-      ...prev,
-      [type]: photoUrl
-    }));
+    setPhotos(prev => ({ ...prev, [type]: photoUrl }));
   };
 
-  // Show admin settings if requested
   if (currentView === 'admin-settings') {
     return (
       <AdminSettings
@@ -84,185 +67,181 @@ function App() {
   const buttonData = [
     {
       key: "nms_app",
-      title: "🌱 Aplikasi NMS",
+      title: "Aplikasi NMS",
       url: "https://nursery.trees4trees.org/",
+      directRedirect: false,
       icon: Sprout,
-      gradient: "from-red-500 via-red-600 to-red-700",
-      hoverGradient: "from-red-600 via-red-700 to-red-800",
-      iconGradient: "from-red-500 to-red-700",
-      description: "Sistem Nursery Management"
+      color: "#ef4444",
+      colorLight: "#fef2f2",
+      colorMid: "#fee2e2",
+      description: "Nursery Management",
     },
     {
       key: "tkh_attendance",
-      title: "📋 Absensi Tenaga Kerja",
+      title: "Absensi TKH",
       url: "https://absentkhcitanduy.lovable.app/",
+      directRedirect: false,
       icon: ClipboardList,
-      gradient: "from-yellow-500 via-yellow-600 to-orange-600",
-      hoverGradient: "from-yellow-600 via-yellow-700 to-orange-700",
-      iconGradient: "from-yellow-500 to-orange-600",
-      description: "Absensi & Rekap TKH"
+      color: "#f59e0b",
+      colorLight: "#fffbeb",
+      colorMid: "#fef3c7",
+      description: "Tenaga Kerja Harian",
     },
     {
       key: "employee_attendance",
-      title: "📝 Absensi Karyawan",
+      title: "Absensi Karyawan",
       url: "https://sites.google.com/view/rekapabsencitanduy/beranda",
       directRedirect: true,
       icon: FileText,
-      gradient: "from-green-500 via-emerald-600 to-teal-700",
-      hoverGradient: "from-green-600 via-emerald-700 to-teal-800",
-      iconGradient: "from-green-500 to-teal-700",
-      description: "Absensi, Jurnal & Roster"
+      color: "#10b981",
+      colorLight: "#ecfdf5",
+      colorMid: "#d1fae5",
+      description: "Jurnal & Roster",
     },
     {
       key: "ff_registration",
-      title: "👥 Daftar FF",
+      title: "Daftar FF",
       url: "https://trees4trees-my.sharepoint.com/:x:/g/personal/rijal_ramdani_trees4trees_org/IQA3mh8I9faXToO1b0lNDZcWAfin4uheEB2uJsiv9diXqYw?rtime=i0ohY4Uh3kg",
+      directRedirect: false,
       icon: UserPlus,
-      gradient: "from-blue-500 via-indigo-600 to-purple-700",
-      hoverGradient: "from-blue-600 via-indigo-700 to-purple-800",
-      iconGradient: "from-blue-500 to-purple-700",
-      description: "Field Facilitator Management"
+      color: "#3b82f6",
+      colorLight: "#eff6ff",
+      colorMid: "#dbeafe",
+      description: "Field Facilitator",
     },
     {
       key: "payment_info",
-      title: "💰 Iuran dan Rincian",
+      title: "Iuran & Rincian",
       url: "https://docs.google.com/spreadsheets/d/1VljjoL6ie4nay7o6loln9qr1GnYhJR8hVIUha8CPLbw/edit?usp=sharing",
+      directRedirect: false,
       icon: DollarSign,
-      gradient: "from-pink-500 via-rose-600 to-red-600",
-      hoverGradient: "from-pink-600 via-rose-700 to-red-700",
-      iconGradient: "from-pink-500 to-red-600",
-      description: "Informasi Keuangan"
-    }
+      color: "#ec4899",
+      colorLight: "#fdf2f8",
+      colorMid: "#fce7f3",
+      description: "Informasi Keuangan",
+    },
   ];
+
+  const visibleButtons = buttonData.filter(btn => buttonSettings[btn.key] !== false);
 
   return (
     <>
       <LoadingScreen isLoading={isLoading} />
-      
-      <div className={`min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-yellow-50 relative overflow-hidden transition-all duration-1000 ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
-        {/* Planting Trees Background */}
-        <div className="absolute inset-0 bg-planting-subtle opacity-40">
-          <div className="absolute inset-0 bg-nature-pattern opacity-50"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(34,197,94,0.08),transparent_50%)]"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(251,191,36,0.05),transparent_50%)]"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_90%_10%,rgba(132,204,22,0.04),transparent_50%)]"></div>
-        </div>
 
-        {/* Floating Plant Elements */}
-        {isLoading && (
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            {[...Array(8)].map((_, i) => (
-              <div
-                key={i}
-                className="absolute animate-float-leaf"
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                  animationDelay: `${Math.random() * 5}s`,
-                  animationDuration: `${8 + Math.random() * 4}s`
-                }}
-              >
-                <Leaf className="h-6 w-6 text-green-300 opacity-30" />
-              </div>
-            ))}
-          </div>
-        )}
+      <div className={`home-root transition-opacity duration-700 ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
 
-        {/* Admin Settings Button */}
+        {/* Admin button */}
         <button
           onClick={() => setCurrentView('admin-settings')}
-          className="fixed top-4 right-4 z-50 p-3 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 transition-colors"
+          className="admin-fab"
           title="Admin Settings"
         >
           <Settings className="h-5 w-5" />
         </button>
 
-        {/* Main Content */}
-        <div className="container mx-auto px-4 py-8 relative z-10">
+        {/* ── HERO SECTION ── */}
+        <section className="hero-section">
+          {/* Background blobs */}
+          <div className="hero-blob hero-blob-1" />
+          <div className="hero-blob hero-blob-2" />
+          <div className="hero-blob hero-blob-3" />
+
+          {/* Top status bar feel */}
+          <div className="hero-topbar">
+            <div className="hero-topbar-dot" />
+            <span className="hero-topbar-text">Site Citanduy</span>
+            <MapPin className="h-3 w-3 text-emerald-300" />
+          </div>
+
           {/* Logo */}
-          <div className="flex justify-center mb-8">
-            <div className="relative group">
-              <div className="absolute -inset-4 bg-gradient-to-r from-green-200 to-emerald-200 rounded-2xl blur-2xl group-hover:blur-3xl transition-all duration-700 opacity-60"></div>
-              <img 
+          <div className="hero-logo-wrap">
+            <div className="hero-logo-ring">
+              <img
                 src={photos.header}
-                alt="Yayasan Bumi Hijau Lestari Logo"
-                className="relative h-24 w-auto md:h-28 object-contain rounded-2xl shadow-2xl border-4 border-white backdrop-blur-sm transform group-hover:scale-110 transition-all duration-700"
-                loading="eager"
-                onError={(e) => {
-                  e.currentTarget.src = 'https://i.postimg.cc/ZnWHPbw9/T4-T-Logo-Baru-2-1.jpg';
-                }}
+                alt="Logo"
+                className="hero-logo-img"
+                onError={(e) => { e.currentTarget.src = 'https://i.postimg.cc/ZnWHPbw9/T4-T-Logo-Baru-2-1.jpg'; }}
               />
             </div>
+            <div className="hero-logo-pulse" />
           </div>
 
-          {/* Planting Trees Greeting */}
-          <div className="text-center mb-8 animate-fade-in">
-            <div className="relative inline-block">
-              <div className="absolute -inset-2 bg-gradient-to-r from-green-100 to-emerald-100 blur-xl rounded-3xl opacity-50"></div>
-              <div className="relative flex items-center justify-center space-x-3 px-6 py-3 bg-white/90 backdrop-blur-md rounded-3xl shadow-xl border-2 border-green-200">
-                <Sprout className="h-6 w-6 text-green-600 animate-pulse" />
-                <div className="text-center">
-                  <p className="text-2xl md:text-3xl font-bold text-green-800 mb-1">
-                    Planting Trees for Tomorrow
-                  </p>
-                  <p className="text-sm md:text-base text-green-700 font-medium">
-                    Bersama Menanam Pohon Untuk Masa Depan Citanduy 🌱
-                  </p>
+          {/* Title */}
+          <div className="hero-title-block">
+            <h1 className="hero-org-name">YAYASAN BUMI HIJAU LESTARI</h1>
+            <div className="hero-badge">
+              <Sprout className="h-3.5 w-3.5 text-emerald-300" />
+              <span>Planting Trees for Tomorrow</span>
+            </div>
+            <p className="hero-sub">Bersama Menanam Pohon Untuk Masa Depan Citanduy</p>
+          </div>
+
+          {/* Stats strip */}
+          <div className="hero-stats">
+            <div className="hero-stat-item">
+              <span className="hero-stat-num">5+</span>
+              <span className="hero-stat-label">Layanan</span>
+            </div>
+            <div className="hero-stat-divider" />
+            <div className="hero-stat-item">
+              <span className="hero-stat-num">T4T</span>
+              <span className="hero-stat-label">Trees4Trees</span>
+            </div>
+            <div className="hero-stat-divider" />
+            <div className="hero-stat-item">
+              <span className="hero-stat-num">24/7</span>
+              <span className="hero-stat-label">Online</span>
+            </div>
+          </div>
+
+          {/* Wave bottom */}
+          <div className="hero-wave">
+            <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" fill="#f0fdf4" />
+            </svg>
+          </div>
+        </section>
+
+        {/* ── MAIN CONTENT ── */}
+        <main className="home-main">
+
+          {/* Section header */}
+          <div className="section-header">
+            <div className="section-header-bar" />
+            <h2 className="section-title">Menu Utama</h2>
+          </div>
+
+          {/* Menu grid */}
+          <div className="menu-grid">
+            {visibleButtons.map((button, index) => {
+              const IconComp = button.icon;
+              const handleClick = () => {
+                if (button.directRedirect) {
+                  window.open(button.url, '_blank');
+                }
+              };
+              const content = (
+                <div className="menu-card-inner">
+                  <div className="menu-card-icon-wrap" style={{ background: button.colorMid }}>
+                    <IconComp className="menu-card-icon" style={{ color: button.color }} />
+                  </div>
+                  <div className="menu-card-text">
+                    <span className="menu-card-title">{button.title}</span>
+                    <span className="menu-card-desc">{button.description}</span>
+                  </div>
+                  <ChevronRight className="menu-card-arrow" style={{ color: button.color }} />
+                  <div className="menu-card-accent" style={{ background: button.colorMid }} />
                 </div>
-                <Sprout className="h-6 w-6 text-green-600 animate-pulse" />
-              </div>
-            </div>
-          </div>
+              );
 
-          {/* Header */}
-          <div className="text-center mb-12">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-green-700 via-emerald-600 to-teal-700 bg-clip-text text-transparent mb-6 leading-tight">
-              YAYASAN BUMI HIJAU LESTARI
-            </h1>
-            <div className="relative inline-block">
-              <div className="absolute -inset-2 bg-gradient-to-r from-green-100 to-emerald-100 blur-xl rounded-3xl opacity-70"></div>
-              <h2 className="relative text-xl md:text-2xl font-bold text-green-800 px-8 py-4 bg-white/80 backdrop-blur-md rounded-3xl shadow-xl border-2 border-green-200">
-                🌿 Site Citanduy 🌿
-              </h2>
-            </div>
-          </div>
-
-          {/* Button Cards */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-6 mb-12 max-w-7xl mx-auto">
-            {buttonData.filter(btn => buttonSettings[btn.key] !== false).map((button, index) => (
-              button.directRedirect ? (
+              return button.directRedirect ? (
                 <button
                   key={index}
-                  onClick={() => window.open(button.url!, '_blank')}
-                  className="group relative overflow-hidden rounded-2xl md:rounded-3xl bg-white p-3 md:p-6 shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-500 hover:-translate-y-2 border border-gray-100"
-                  style={{
-                    animationDelay: `${index * 0.1}s`
-                  }}
+                  onClick={handleClick}
+                  className="menu-card"
+                  style={{ '--card-color': button.color, '--card-light': button.colorLight } as React.CSSProperties}
                 >
-                  {/* Gradient Background */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${button.hoverGradient} opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-2xl md:rounded-3xl`}></div>
-
-                  {/* Animated Background Elements */}
-                  <div className={`absolute -top-2 md:-top-4 -right-2 md:-right-4 w-12 md:w-20 h-12 md:h-20 bg-gradient-to-br ${button.gradient} rounded-full opacity-20 group-hover:opacity-40 transition-all duration-500 group-hover:scale-150`}></div>
-                  <div className={`absolute -bottom-1 md:-bottom-2 -left-1 md:-left-2 w-8 md:w-12 h-8 md:h-12 bg-gradient-to-br ${button.gradient} rounded-full opacity-20 group-hover:opacity-40 transition-all duration-500 group-hover:scale-125`}></div>
-
-                  <div className="relative z-10 flex flex-col items-center text-center space-y-2 md:space-y-4">
-                    <div className={`w-10 md:w-16 h-10 md:h-16 bg-gradient-to-br ${button.gradient} opacity-10 rounded-xl md:rounded-2xl flex items-center justify-center group-hover:bg-white/20 transition-all duration-500 group-hover:scale-110 group-hover:rotate-6`}>
-                      <button.icon className={`w-5 md:w-8 h-5 md:h-8 bg-gradient-to-br ${button.iconGradient} bg-clip-text text-transparent group-hover:text-white transition-all duration-500`} />
-                    </div>
-                    <div>
-                      <h3 className="text-sm md:text-lg font-bold text-gray-800 group-hover:text-white transition-colors duration-500 mb-1 md:mb-2">
-                        {button.title.replace(/^[^\s]+\s/, '')}
-                      </h3>
-                      <p className="text-xs md:text-sm text-gray-600 group-hover:text-white/90 transition-colors duration-500 mb-2 md:mb-3">
-                        {button.description}
-                      </p>
-                      <div className={`flex items-center justify-center space-x-2 bg-gradient-to-r ${button.iconGradient} bg-clip-text text-transparent group-hover:text-white transition-all duration-500`}>
-                        <ExternalLink className="w-3 md:w-4 h-3 md:h-4" />
-                        <span className="text-xs md:text-xs font-medium">Buka</span>
-                      </div>
-                    </div>
-                  </div>
+                  {content}
                 </button>
               ) : (
                 <a
@@ -270,95 +249,68 @@ function App() {
                   href={button.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group relative overflow-hidden rounded-2xl md:rounded-3xl bg-white p-3 md:p-6 shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-500 hover:-translate-y-2 border border-gray-100"
-                  style={{
-                    animationDelay: `${index * 0.1}s`
-                  }}
+                  className="menu-card"
+                  style={{ '--card-color': button.color, '--card-light': button.colorLight } as React.CSSProperties}
                 >
-                  {/* Gradient Background */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${button.hoverGradient} opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-2xl md:rounded-3xl`}></div>
-
-                  {/* Animated Background Elements */}
-                  <div className={`absolute -top-2 md:-top-4 -right-2 md:-right-4 w-12 md:w-20 h-12 md:h-20 bg-gradient-to-br ${button.gradient} rounded-full opacity-20 group-hover:opacity-40 transition-all duration-500 group-hover:scale-150`}></div>
-                  <div className={`absolute -bottom-1 md:-bottom-2 -left-1 md:-left-2 w-8 md:w-12 h-8 md:h-12 bg-gradient-to-br ${button.gradient} rounded-full opacity-20 group-hover:opacity-40 transition-all duration-500 group-hover:scale-125`}></div>
-
-                  <div className="relative z-10 flex flex-col items-center text-center space-y-2 md:space-y-4">
-                    <div className={`w-10 md:w-16 h-10 md:h-16 bg-gradient-to-br ${button.gradient} opacity-10 rounded-xl md:rounded-2xl flex items-center justify-center group-hover:bg-white/20 transition-all duration-500 group-hover:scale-110 group-hover:rotate-6`}>
-                      <button.icon className={`w-5 md:w-8 h-5 md:h-8 bg-gradient-to-br ${button.iconGradient} bg-clip-text text-transparent group-hover:text-white transition-all duration-500`} />
-                    </div>
-                    <div>
-                      <h3 className="text-sm md:text-lg font-bold text-gray-800 group-hover:text-white transition-colors duration-500 mb-1 md:mb-2">
-                        {button.title.replace(/^[^\s]+\s/, '')}
-                      </h3>
-                      <p className="text-xs md:text-sm text-gray-600 group-hover:text-white/90 transition-colors duration-500 mb-2 md:mb-3">
-                        {button.description}
-                      </p>
-                      <div className={`flex items-center justify-center space-x-2 bg-gradient-to-r ${button.iconGradient} bg-clip-text text-transparent group-hover:text-white transition-all duration-500`}>
-                        <ExternalLink className="w-3 md:w-4 h-3 md:h-4" />
-                        <span className="text-xs md:text-xs font-medium">Buka</span>
-                      </div>
-                    </div>
-                  </div>
+                  {content}
                 </a>
-              )
-            ))}
+              );
+            })}
           </div>
 
-          {/* Roster Schedule Section */}
-          <div className="text-center mb-8">
-            <div className="inline-block px-8 py-4 bg-gradient-to-r from-blue-50 to-indigo-50 backdrop-blur-sm rounded-2xl shadow-lg border border-blue-200 mb-6">
-              <h3 className="text-xl font-bold text-blue-800">📅 Lihat Jadwal Roster</h3>
+          {/* ── INFO CARDS ── */}
+          <div className="info-section">
+            {/* Roster card */}
+            <div className="info-card">
+              <div className="info-card-header">
+                <div className="info-card-icon-wrap info-card-icon-blue">
+                  <Calendar className="h-4 w-4 text-blue-600" />
+                </div>
+                <h3 className="info-card-title text-blue-800">Jadwal Roster</h3>
+              </div>
+              <div className="info-card-img-wrap">
+                <img
+                  src={photos.roster}
+                  alt="Jadwal Roster"
+                  className="info-card-img"
+                  loading="lazy"
+                  onError={(e) => { e.currentTarget.src = 'https://via.placeholder.com/600x300/e5f3ff/1e40af?text=Jadwal+Roster'; }}
+                />
+              </div>
             </div>
-            
-            <div className="relative group max-w-4xl mx-auto">
-              <div className="absolute -inset-4 bg-gradient-to-r from-blue-200 to-indigo-200 rounded-2xl blur-2xl group-hover:blur-3xl transition-all duration-700 opacity-60"></div>
-              <img 
-                src={photos.roster}
-                alt="Jadwal Roster"
-                className="relative w-full h-48 md:h-64 object-contain bg-white rounded-2xl shadow-2xl border-4 border-white backdrop-blur-sm transform group-hover:scale-105 transition-all duration-700"
-                loading="lazy"
-                onError={(e) => {
-                  e.currentTarget.src = 'https://via.placeholder.com/600x300/e5f3ff/1e40af?text=Jadwal+Roster';
-                }}
-              />
+
+            {/* Payment card */}
+            <div className="info-card">
+              <div className="info-card-header">
+                <div className="info-card-icon-wrap info-card-icon-green">
+                  <BarChart3 className="h-4 w-4 text-emerald-600" />
+                </div>
+                <h3 className="info-card-title text-emerald-800">Iuran & Transfer Bank</h3>
+              </div>
+              <div className="info-card-img-wrap">
+                <img
+                  src={photos.payment}
+                  alt="Info Pembayaran"
+                  className="info-card-img"
+                  loading="lazy"
+                  onError={(e) => { e.currentTarget.src = 'https://via.placeholder.com/600x300/f0fdf4/16a34a?text=Info+Pembayaran'; }}
+                />
+              </div>
             </div>
           </div>
 
-          {/* Payment Info Section */}
-          <div className="text-center mb-12">
-            <div className="inline-block px-8 py-4 bg-gradient-to-r from-green-50 to-emerald-50 backdrop-blur-sm rounded-2xl shadow-lg border border-green-200 mb-6">
-              <h3 className="text-xl font-bold text-green-800">💳 Untuk Iuran dan Lainnya bisa Transfer ke Bank</h3>
-            </div>
-            
-            <div className="relative group max-w-4xl mx-auto">
-              <div className="absolute -inset-4 bg-gradient-to-r from-green-200 to-emerald-200 rounded-2xl blur-2xl group-hover:blur-3xl transition-all duration-700 opacity-60"></div>
-              <img 
-                src={photos.payment}
-                alt="Info Pembayaran"
-                className="relative w-full h-48 md:h-64 object-contain bg-white rounded-2xl shadow-2xl border-4 border-white backdrop-blur-sm transform group-hover:scale-105 transition-all duration-700"
-                loading="lazy"
-                onError={(e) => {
-                  e.currentTarget.src = 'https://via.placeholder.com/600x300/f0fdf4/16a34a?text=Info+Pembayaran';
-                }}
-              />
-            </div>
+          {/* Location chip */}
+          <div className="location-chip">
+            <MapPin className="h-4 w-4 text-emerald-500" />
+            <span>Citanduy, Tasikmalaya, Jawa Barat</span>
           </div>
-
-          {/* Location Info */}
-          <div className="text-center">
-            <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-green-50 to-emerald-50 backdrop-blur-sm rounded-2xl px-6 py-3 shadow-lg border border-green-200">
-              <MapPin className="h-5 w-5 text-green-600" />
-              <span className="text-green-800 font-medium">Citanduy, Tasikmalaya, Jawa Barat</span>
-            </div>
-          </div>
-        </div>
+        </main>
 
         {/* Footer */}
-        <footer className="relative z-10 text-center py-8">
-          <div className="inline-block px-8 py-4 bg-gradient-to-r from-green-50 to-emerald-50 backdrop-blur-sm rounded-2xl shadow-lg border border-green-200">
-            <p className="text-green-800 font-medium">
-              Aplikasi Powered by M Rijal Ramdani
-            </p>
+        <footer className="home-footer">
+          <div className="home-footer-inner">
+            <Sprout className="h-4 w-4 text-emerald-500" />
+            <span>Powered by M Rijal Ramdani</span>
           </div>
         </footer>
       </div>

@@ -1,177 +1,169 @@
-import React from 'react';
-import { Sprout, Leaf, Moon, Star } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
 
 interface LoadingScreenProps {
   isLoading: boolean;
 }
 
 const LoadingScreen: React.FC<LoadingScreenProps> = ({ isLoading }) => {
+  const [progress, setProgress] = useState(0);
+  const [phase, setPhase] = useState(0);
+
+  useEffect(() => {
+    if (!isLoading) return;
+    const timer = setInterval(() => {
+      setProgress(p => {
+        if (p >= 100) { clearInterval(timer); return 100; }
+        return p + 1.2;
+      });
+    }, 30);
+    const phaseTimer1 = setTimeout(() => setPhase(1), 600);
+    const phaseTimer2 = setTimeout(() => setPhase(2), 1400);
+    const phaseTimer3 = setTimeout(() => setPhase(3), 2200);
+    return () => {
+      clearInterval(timer);
+      clearTimeout(phaseTimer1);
+      clearTimeout(phaseTimer2);
+      clearTimeout(phaseTimer3);
+    };
+  }, [isLoading]);
+
   if (!isLoading) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-planting-subtle">
-      {/* Nature Pattern Background */}
-      <div className="absolute inset-0 bg-nature-pattern opacity-30"></div>
-      
-      {/* Animated background elements - stars and moon */}
-      <div className="absolute inset-0 overflow-hidden">
-        {/* Floating stars */}
-        {[...Array(8)].map((_, i) => (
+    <div className="splash-screen fixed inset-0 z-50 flex flex-col items-center justify-center overflow-hidden">
+      {/* Layered background */}
+      <div className="splash-bg-layer1 absolute inset-0" />
+      <div className="splash-bg-layer2 absolute inset-0" />
+      <div className="splash-bg-layer3 absolute inset-0" />
+
+      {/* Decorative circles */}
+      <div className="splash-circle splash-circle-1 absolute" />
+      <div className="splash-circle splash-circle-2 absolute" />
+      <div className="splash-circle splash-circle-3 absolute" />
+
+      {/* Floating particles */}
+      {[...Array(12)].map((_, i) => (
+        <div
+          key={i}
+          className="splash-particle absolute"
+          style={{
+            left: `${8 + (i * 7.5) % 85}%`,
+            top: `${10 + (i * 11) % 75}%`,
+            animationDelay: `${(i * 0.25) % 2}s`,
+            animationDuration: `${3 + (i % 3)}s`,
+            width: i % 3 === 0 ? '8px' : i % 3 === 1 ? '5px' : '3px',
+            height: i % 3 === 0 ? '8px' : i % 3 === 1 ? '5px' : '3px',
+          }}
+        />
+      ))}
+
+      {/* Main content */}
+      <div className="relative z-10 flex flex-col items-center px-8 w-full max-w-xs">
+
+        {/* Tree illustration */}
+        <div className="splash-tree-container mb-6">
+          {/* Ground */}
+          <div className="splash-ground" />
+
+          {/* Trunk */}
+          <div className="splash-trunk" style={{ height: phase >= 1 ? '56px' : '0px' }} />
+
+          {/* Branch left */}
           <div
-            key={`star-${i}`}
-            className="absolute animate-pulse"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 3}s`,
-              animationDuration: `${2 + Math.random() * 2}s`
-            }}
-          >
-            <Star className="h-3 w-3 text-amber-300 opacity-60" />
-          </div>
-        ))}
-        
-        {/* Floating seed particles */}
-        {[...Array(6)].map((_, i) => (
+            className="splash-branch splash-branch-left"
+            style={{ opacity: phase >= 2 ? 1 : 0, transform: phase >= 2 ? 'rotate(-35deg) scaleX(1)' : 'rotate(-35deg) scaleX(0)' }}
+          />
+
+          {/* Branch right */}
           <div
-            key={`seed-${i}`}
-            className="absolute animate-float-leaf"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 2}s`,
-              animationDuration: `${4 + Math.random() * 3}s`
-            }}
-          >
-            <div className="w-2 h-2 bg-amber-200 rounded-full opacity-40"></div>
-          </div>
-        ))}
+            className="splash-branch splash-branch-right"
+            style={{ opacity: phase >= 2 ? 1 : 0, transform: phase >= 2 ? 'rotate(35deg) scaleX(1)' : 'rotate(35deg) scaleX(0)' }}
+          />
+
+          {/* Canopy layers */}
+          <div
+            className="splash-canopy splash-canopy-bottom"
+            style={{ opacity: phase >= 2 ? 1 : 0, transform: phase >= 2 ? 'scale(1)' : 'scale(0)' }}
+          />
+          <div
+            className="splash-canopy splash-canopy-mid"
+            style={{ opacity: phase >= 2 ? 1 : 0, transform: phase >= 2 ? 'scale(1)' : 'scale(0)' }}
+          />
+          <div
+            className="splash-canopy splash-canopy-top"
+            style={{ opacity: phase >= 3 ? 1 : 0, transform: phase >= 3 ? 'scale(1)' : 'scale(0)' }}
+          />
+
+          {/* Fruit dots */}
+          {phase >= 3 && (
+            <>
+              <div className="splash-fruit" style={{ left: '28%', top: '32%' }} />
+              <div className="splash-fruit splash-fruit-alt" style={{ left: '58%', top: '28%' }} />
+              <div className="splash-fruit" style={{ left: '45%', top: '45%' }} />
+            </>
+          )}
+
+          {/* Leaf particles */}
+          {phase >= 2 && [0, 1, 2, 3].map(i => (
+            <div
+              key={i}
+              className="splash-leaf-particle"
+              style={{
+                left: `${20 + i * 18}%`,
+                animationDelay: `${i * 0.3}s`,
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Logo image */}
+        <div className="splash-logo-ring mb-5">
+          <img
+            src="https://i.postimg.cc/ZnWHPbw9/T4-T-Logo-Baru-2-1.jpg"
+            alt="Logo"
+            className="splash-logo-img"
+            onError={(e) => { e.currentTarget.style.display = 'none'; }}
+          />
+        </div>
+
+        {/* Title */}
+        <div className="text-center mb-1" style={{ opacity: phase >= 1 ? 1 : 0, transition: 'opacity 0.6s ease' }}>
+          <h1 className="splash-title">YAYASAN BUMI</h1>
+          <h1 className="splash-title splash-title-accent">HIJAU LESTARI</h1>
+        </div>
+
+        {/* Tagline */}
+        <p className="splash-tagline mb-6" style={{ opacity: phase >= 2 ? 1 : 0, transition: 'opacity 0.6s ease 0.2s' }}>
+          Planting Trees for Tomorrow
+        </p>
+
+        {/* Progress bar */}
+        <div className="splash-progress-track">
+          <div
+            className="splash-progress-fill"
+            style={{ width: `${Math.min(progress, 100)}%` }}
+          />
+        </div>
+
+        {/* Loading dots */}
+        <div className="flex items-center space-x-1.5 mt-4">
+          {[0, 1, 2].map(i => (
+            <div
+              key={i}
+              className="splash-dot"
+              style={{ animationDelay: `${i * 0.2}s` }}
+            />
+          ))}
+        </div>
+
+        {/* Status text */}
+        <p className="splash-status mt-3" style={{ opacity: phase >= 1 ? 1 : 0, transition: 'opacity 0.5s ease' }}>
+          {phase < 2 ? 'Memuat aplikasi...' : phase < 3 ? 'Menyiapkan data...' : 'Hampir selesai...'}
+        </p>
       </div>
 
-      {/* Main loading content */}
-      <div className="relative z-10 text-center">
-        {/* Planting Animation */}
-        <div className="mb-8 relative">
-          <div className="relative w-40 h-40 mx-auto">
-            {/* Soil base */}
-            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-32 h-8 bg-gradient-to-r from-amber-600 to-yellow-700 rounded-full opacity-80"></div>
-            
-            {/* Growing plant stem */}
-            <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 w-3 bg-gradient-to-t from-green-600 to-green-500 rounded-t-sm animate-grow-up origin-bottom" style={{
-              height: '40px',
-              animationDuration: '1.5s',
-              animationFillMode: 'forwards'
-            }}></div>
-            
-            {/* First leaves - appear after stem */}
-            <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 animate-fade-in-scale" style={{
-              animationDelay: '1.5s',
-              animationDuration: '0.8s',
-              animationFillMode: 'forwards',
-              opacity: 0
-            }}>
-              <div className="relative">
-                <Leaf className="h-8 w-8 text-green-500 transform -rotate-45" />
-                <Leaf className="absolute top-0 left-4 h-8 w-8 text-green-400 transform rotate-45" />
-              </div>
-            </div>
-            
-            {/* Second set of leaves */}
-            <div className="absolute bottom-32 left-1/2 transform -translate-x-1/2 animate-fade-in-scale" style={{
-              animationDelay: '2.2s',
-              animationDuration: '0.8s',
-              animationFillMode: 'forwards',
-              opacity: 0
-            }}>
-              <div className="relative">
-                <Leaf className="h-6 w-6 text-green-600 transform -rotate-30" />
-                <Leaf className="absolute top-0 left-3 h-6 w-6 text-green-500 transform rotate-30" />
-              </div>
-            </div>
-
-            {/* Floating seeds/particles */}
-            {[...Array(6)].map((_, i) => (
-              <div
-                key={i}
-                className="absolute animate-float-leaf"
-                style={{
-                  left: `${20 + Math.random() * 60}%`,
-                  top: `${10 + Math.random() * 30}%`,
-                  animationDelay: `${2 + Math.random() * 2}s`,
-                  animationDuration: `${3 + Math.random() * 2}s`
-                }}
-              >
-                <div className="w-1.5 h-1.5 bg-green-400 rounded-full opacity-70"></div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Loading text */}
-        <div className="space-y-4">
-          {/* Greeting */}
-          <div className="mb-4 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-            <p className="text-2xl md:text-3xl font-bold text-green-700 mb-2">
-              Planting Trees for Tomorrow
-            </p>
-            <p className="text-lg md:text-xl text-green-600">
-              Bersama Menanam Pohon Untuk Masa Depan
-            </p>
-          </div>
-
-          <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-green-700 via-emerald-600 to-amber-600 bg-clip-text text-transparent mb-3 animate-pulse">
-            🌱 Planting Trees for Citanduy
-          </h2>
-          <p className="text-amber-700 text-lg font-medium animate-fade-in" style={{
-            animationDelay: '0.5s'
-          }}>
-            Memuat Portal Trees4Trees Citanduy...
-          </p>
-          
-          {/* Progress bar with planting theme */}
-          <div className="w-64 h-3 bg-amber-100 rounded-full mx-auto overflow-hidden shadow-inner border border-amber-200">
-            <div className="h-full bg-gradient-to-r from-green-500 via-emerald-500 to-amber-500 rounded-full animate-progress shadow-sm"></div>
-          </div>
-          
-          {/* Loading dots */}
-          <div className="flex justify-center space-x-2 mt-6">
-            {[...Array(3)].map((_, i) => (
-              <div
-                key={i}
-                className="w-3 h-3 bg-gradient-to-r from-amber-400 to-amber-500 rounded-full animate-bounce shadow-sm"
-                style={{
-                  animationDelay: `${i * 0.2}s`,
-                  animationDuration: '1s'
-                }}
-              ></div>
-            ))}
-          </div>
-        </div>
-
-        {/* Decorative elements with planting theme */}
-        <div className="absolute top-8 left-8">
-          <Sprout className="h-10 w-10 text-green-500 animate-pulse shadow-planting-glow" />
-        </div>
-        <div className="absolute top-8 right-8">
-          <div className="relative">
-            <Star className="h-8 w-8 text-amber-300 animate-pulse" />
-            <Star className="absolute top-2 left-2 h-6 w-6 text-amber-200 animate-pulse" style={{ animationDelay: '0.5s' }} />
-          </div>
-        </div>
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
-          <div className="flex space-x-4">
-            <Leaf className="h-6 w-6 text-green-400 animate-leaf-dance" />
-            <Moon className="h-6 w-6 text-amber-500 animate-gentle-sway" />
-            <Sprout className="h-6 w-6 text-emerald-400 animate-gentle-sway" />
-            <Leaf className="h-6 w-6 text-green-500 animate-leaf-dance" style={{
-              animationDelay: '1s'
-            }} />
-          </div>
-        </div>
-      </div>
-
-      {/* Bottom gradient with planting theme */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-amber-50 via-green-50 to-transparent opacity-60"></div>
+      {/* Bottom wave */}
+      <div className="splash-bottom-wave absolute bottom-0 left-0 right-0" />
     </div>
   );
 };
