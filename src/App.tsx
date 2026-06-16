@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MapPin, ExternalLink, Sprout, ClipboardList, FileText, UserPlus, DollarSign, Settings, ChevronRight, Calendar, BarChart3 } from 'lucide-react';
+import { MapPin, ExternalLink, Sprout, ClipboardList, FileText, UserPlus, DollarSign, Settings, ChevronRight, Calendar, BarChart3, AlertCircle, RefreshCw } from 'lucide-react';
 import LoadingScreen from './components/LoadingScreen';
 import AdminSettings from './components/AdminSettings';
 import { getAllAppSettings, getAllButtonSettings } from './lib/supabase';
@@ -13,6 +13,8 @@ function App() {
     payment: 'https://via.placeholder.com/600x300/f0fdf4/16a34a?text=Info+Pembayaran'
   });
   const [buttonSettings, setButtonSettings] = useState<{ [key: string]: boolean }>({});
+  const [rosterEmbedKey, setRosterEmbedKey] = useState(0);
+  const [rosterEmbedError, setRosterEmbedError] = useState(false);
 
   useEffect(() => {
     const initializeApp = async () => {
@@ -261,23 +263,70 @@ function App() {
           {/* ── INFO CARDS ── */}
           <div className="info-section">
             {/* Roster card */}
-            <div className="info-card">
+            <div className="info-card roster-card">
               <div className="info-card-header">
                 <div className="info-card-icon-wrap info-card-icon-blue">
                   <Calendar className="h-4 w-4 text-blue-600" />
                 </div>
                 <h3 className="info-card-title text-blue-800">Jadwal Roster</h3>
+                <div className="roster-card-actions">
+                  {rosterEmbedError && (
+                    <button
+                      className="roster-retry-btn"
+                      onClick={() => { setRosterEmbedError(false); setRosterEmbedKey(k => k + 1); }}
+                      title="Coba lagi"
+                    >
+                      <RefreshCw className="h-3.5 w-3.5" />
+                    </button>
+                  )}
+                  <a
+                    href="https://docs.google.com/spreadsheets/d/e/2PACX-1vROF6TC0Nmn1L_AvaseI4_51zUVA3riOLE1BoL-jFHjeiYSN4SuOikpBjsjihbv1mEJ6mocKJS4tHWX/pubhtml?gid=1845550008&single=true"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="roster-open-btn"
+                  >
+                    <ExternalLink className="h-3.5 w-3.5" />
+                    <span>Buka</span>
+                  </a>
+                </div>
               </div>
-              <div className="info-card-embed-wrap">
-                <iframe
-                  src="https://docs.google.com/spreadsheets/d/e/2PACX-1vROF6TC0Nmn1L_AvaseI4_51zUVA3riOLE1BoL-jFHjeiYSN4SuOikpBjsjihbv1mEJ6mocKJS4tHWX/pubhtml?gid=1845550008&single=true&widget=true&headers=false"
-                  className="info-card-embed"
-                  title="Jadwal Roster"
-                  loading="lazy"
-                  frameBorder="0"
-                  allowFullScreen
-                />
-              </div>
+
+              {rosterEmbedError ? (
+                <div className="roster-error-state">
+                  <AlertCircle className="h-8 w-8 text-blue-300 mb-3" />
+                  <p className="roster-error-title">Spreadsheet tidak dapat dimuat</p>
+                  <p className="roster-error-sub">Google Sheets memblokir tampilan langsung.</p>
+                  <a
+                    href="https://docs.google.com/spreadsheets/d/e/2PACX-1vROF6TC0Nmn1L_AvaseI4_51zUVA3riOLE1BoL-jFHjeiYSN4SuOikpBjsjihbv1mEJ6mocKJS4tHWX/pubhtml?gid=1845550008&single=true"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="roster-error-link"
+                  >
+                    <ExternalLink className="h-4 w-4" />
+                    Lihat Jadwal Roster
+                  </a>
+                </div>
+              ) : (
+                <div className="info-card-embed-wrap">
+                  <iframe
+                    key={rosterEmbedKey}
+                    src="https://docs.google.com/spreadsheets/d/e/2PACX-1vROF6TC0Nmn1L_AvaseI4_51zUVA3riOLE1BoL-jFHjeiYSN4SuOikpBjsjihbv1mEJ6mocKJS4tHWX/pubhtml?gid=1845550008&single=true&widget=true&headers=false"
+                    className="info-card-embed"
+                    title="Jadwal Roster"
+                    loading="lazy"
+                    frameBorder="0"
+                    onError={() => setRosterEmbedError(true)}
+                    onLoad={(e) => {
+                      try {
+                        const doc = (e.target as HTMLIFrameElement).contentDocument;
+                        if (!doc || doc.body.innerHTML === '') setRosterEmbedError(true);
+                      } catch {
+                        setRosterEmbedError(true);
+                      }
+                    }}
+                  />
+                </div>
+              )}
             </div>
 
             {/* Payment card */}
