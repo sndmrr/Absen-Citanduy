@@ -32,7 +32,7 @@ function App() {
       } catch (error) {
         console.error('Error loading app settings:', error);
       }
-      setTimeout(() => setIsLoading(false), 3000);
+      setTimeout(() => setIsLoading(false), 4000);
     };
     initializeApp();
   }, []);
@@ -310,20 +310,11 @@ function App() {
                 <div className="info-card-embed-wrap">
                   <iframe
                     key={rosterEmbedKey}
-                    src="https://docs.google.com/spreadsheets/d/e/2PACX-1vROF6TC0Nmn1L_AvaseI4_51zUVA3riOLE1BoL-jFHjeiYSN4SuOikpBjsjihbv1mEJ6mocKJS4tHWX/pubhtml?gid=1845550008&single=true&widget=true&headers=false"
+                    src="https://docs.google.com/spreadsheets/d/e/2PACX-1vROF6TC0Nmn1L_AvaseI4_51zUVA3riOLE1BoL-jFHjeiYSN4SuOikpBjsjihbv1mEJ6mocKJS4tHWX/pubhtml?gid=1845550008&single=true"
                     className="info-card-embed"
                     title="Jadwal Roster"
                     loading="lazy"
                     frameBorder="0"
-                    onError={() => setRosterEmbedError(true)}
-                    onLoad={(e) => {
-                      try {
-                        const doc = (e.target as HTMLIFrameElement).contentDocument;
-                        if (!doc || doc.body.innerHTML === '') setRosterEmbedError(true);
-                      } catch {
-                        setRosterEmbedError(true);
-                      }
-                    }}
                   />
                 </div>
               )}
