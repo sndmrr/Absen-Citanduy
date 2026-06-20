@@ -17,7 +17,7 @@ function App() {
   const [rosterEmbedError, setRosterEmbedError] = useState(false);
 
   useEffect(() => {
-    const initializeApp = async () => {
+    const loadSettings = async () => {
       try {
         const settings = await getAllAppSettings();
         setPhotos({
@@ -32,9 +32,10 @@ function App() {
       } catch (error) {
         console.error('Error loading app settings:', error);
       }
-      setTimeout(() => setIsLoading(false), 3000);
     };
-    initializeApp();
+    loadSettings();
+    const timer = setTimeout(() => setIsLoading(false), 3000);
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
