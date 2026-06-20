@@ -352,7 +352,7 @@ function App() {
         <footer className="home-footer">
           <div className="home-footer-inner">
             <Sprout className="h-4 w-4 text-emerald-500" />
-            <span>Powered by M Rijal Ramdani</span>
+            <span>Created M Rijal Ramdani</span>
           </div>
         </footer>
       </div>
