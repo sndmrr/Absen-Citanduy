@@ -593,8 +593,8 @@ img { content-visibility: auto; }
   position: relative;
 }
 .info-card-embed {
-  width: 130%;
-  height: 500px;
+  width: 100%;
+  height: 340px;
   display: block;
   border: none;
   border-radius: 12px;
