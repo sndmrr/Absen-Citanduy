@@ -16,9 +16,9 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ isLoading }) => {
         return p + 1.2;
       });
     }, 30);
-    const phaseTimer1 = setTimeout(() => setPhase(1), 600);
-    const phaseTimer2 = setTimeout(() => setPhase(2), 1400);
-    const phaseTimer3 = setTimeout(() => setPhase(3), 2200);
+    const phaseTimer1 = setTimeout(() => setPhase(1), 500);
+    const phaseTimer2 = setTimeout(() => setPhase(2), 1000);
+    const phaseTimer3 = setTimeout(() => setPhase(3), 1000);
     return () => {
       clearInterval(timer);
       clearTimeout(phaseTimer1);
