@@ -32,7 +32,7 @@ function App() {
       } catch (error) {
         console.error('Error loading app settings:', error);
       }
-      setTimeout(() => setIsLoading(false), 4000);
+      setTimeout(() => setIsLoading(false), 2000);
     };
     initializeApp();
   }, []);
