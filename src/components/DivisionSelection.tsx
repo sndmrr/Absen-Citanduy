@@ -174,7 +174,7 @@ const DivisionSelection: React.FC<DivisionSelectionProps> = ({ onBack }) => {
       <footer className="mt-8 text-center py-6">
         <div className="inline-block px-6 py-3 bg-gradient-to-r from-green-50 to-emerald-50 backdrop-blur-sm rounded-xl shadow-sm border border-green-200">
           <p className="text-green-800 font-medium text-sm">
-            Aplikasi Powered by M Rijal Ramdani
+          App Created by M Rijal Ramdani
           </p>
         </div>
       </footer>
