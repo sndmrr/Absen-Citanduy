@@ -4,8 +4,10 @@ import LoadingScreen from './components/LoadingScreen';
 import AdminSettings from './components/AdminSettings';
 import { getAllAppSettings, getAllButtonSettings } from './lib/supabase';
 
+import CreditsScreen from './components/CreditsScreen';
+
 function App() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [loadingPhase, setLoadingPhase] = useState<'loading' | 'credits' | 'done'>('loading');
   const [currentView, setCurrentView] = useState<'home' | 'admin-settings'>('home');
   const [photos, setPhotos] = useState({
     header: 'https://i.postimg.cc/ZnWHPbw9/T4-T-Logo-Baru-2-1.jpg',
@@ -34,9 +36,15 @@ function App() {
       }
     };
     loadSettings();
-    const timer = setTimeout(() => setIsLoading(false), 3000);
+    const timer = setTimeout(() => setLoadingPhase('credits'), 3000);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (loadingPhase !== 'credits') return;
+    const timer = setTimeout(() => setLoadingPhase('done'), 1500);
+    return () => clearTimeout(timer);
+  }, [loadingPhase]);
 
   useEffect(() => {
     if (currentView === 'home') {
@@ -129,9 +137,10 @@ function App() {
 
   return (
     <>
-      <LoadingScreen isLoading={isLoading} />
+      <LoadingScreen isLoading={loadingPhase === 'loading'} />
+      <CreditsScreen isActive={loadingPhase === 'credits'} />
 
-      <div className={`home-root transition-opacity duration-700 ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
+      <div className={`home-root transition-opacity duration-700 ${loadingPhase !== 'done' ? 'opacity-0' : 'opacity-100'}`}>
 
         {/* Admin button */}
         <button
