@@ -12,7 +12,7 @@ function App() {
   const [photos, setPhotos] = useState({
     header: 'https://i.postimg.cc/ZnWHPbw9/T4-T-Logo-Baru-2-1.jpg',
     roster: 'https://via.placeholder.com/600x300/e5f3ff/1e40af?text=Jadwal+Roster',
-    payment: 'https://via.placeholder.com/600x300/f0fdf4/16a34a?text=Info+Pembayaran'
+    payment: 'https://via.placeholder.com/600x300/eff6ff/2563eb?text=Info+Pembayaran'
   });
   const [buttonSettings, setButtonSettings] = useState<{ [key: string]: boolean }>({});
   const [rosterEmbedKey, setRosterEmbedKey] = useState(0);
@@ -25,7 +25,7 @@ function App() {
         setPhotos({
           header: settings.header_photo || 'https://i.postimg.cc/ZnWHPbw9/T4-T-Logo-Baru-2-1.jpg',
           roster: settings.roster_photo || 'https://via.placeholder.com/600x300/e5f3ff/1e40af?text=Jadwal+Roster',
-          payment: settings.payment_photo || 'https://via.placeholder.com/600x300/f0fdf4/16a34a?text=Info+Pembayaran'
+          payment: settings.payment_photo || 'https://via.placeholder.com/600x300/eff6ff/2563eb?text=Info+Pembayaran'
         });
         const buttons = await getAllButtonSettings();
         const buttonMap: { [key: string]: boolean } = {};
@@ -104,9 +104,9 @@ function App() {
       url: "https://sites.google.com/view/rekapabsencitanduy/beranda",
       directRedirect: true,
       icon: FileText,
-      color: "#10b981",
-      colorLight: "#ecfdf5",
-      colorMid: "#d1fae5",
+      color: "#3b82f6",
+      colorLight: "#eff6ff",
+      colorMid: "#dbeafe",
       description: "Jurnal & Roster",
     },
     {
@@ -162,7 +162,7 @@ function App() {
           <div className="hero-topbar">
             <div className="hero-topbar-dot" />
             <span className="hero-topbar-text">Site Citanduy</span>
-            <MapPin className="h-3 w-3 text-emerald-300" />
+            <MapPin className="h-3 w-3 text-blue-300" />
           </div>
 
           {/* Logo */}
@@ -182,7 +182,7 @@ function App() {
           <div className="hero-title-block">
             <h1 className="hero-org-name">YAYASAN BUMI HIJAU LESTARI</h1>
             <div className="hero-badge">
-              <Sprout className="h-3.5 w-3.5 text-emerald-300" />
+              <Sprout className="h-3.5 w-3.5 text-blue-300" />
               <span>Planting Trees for Tomorrow</span>
             </div>
             <p className="hero-sub">Bersama Menanam Pohon Untuk Masa Depan Citanduy</p>
@@ -209,7 +209,7 @@ function App() {
           {/* Wave bottom */}
           <div className="hero-wave">
             <svg viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" fill="#f0fdf4" />
+              <path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" fill="#eff6ff" />
             </svg>
           </div>
         </section>
@@ -334,9 +334,9 @@ function App() {
             <div className="info-card">
               <div className="info-card-header">
                 <div className="info-card-icon-wrap info-card-icon-green">
-                  <BarChart3 className="h-4 w-4 text-emerald-600" />
+                  <BarChart3 className="h-4 w-4 text-blue-600" />
                 </div>
-                <h3 className="info-card-title text-emerald-800">Iuran & Transfer Bank</h3>
+                <h3 className="info-card-title text-blue-800">Iuran & Transfer Bank</h3>
               </div>
               <div className="info-card-img-wrap">
                 <img
@@ -344,7 +344,7 @@ function App() {
                   alt="Info Pembayaran"
                   className="info-card-img"
                   loading="lazy"
-                  onError={(e) => { e.currentTarget.src = 'https://via.placeholder.com/600x300/f0fdf4/16a34a?text=Info+Pembayaran'; }}
+                  onError={(e) => { e.currentTarget.src = 'https://via.placeholder.com/600x300/eff6ff/2563eb?text=Info+Pembayaran'; }}
                 />
               </div>
             </div>
@@ -352,7 +352,7 @@ function App() {
 
           {/* Location chip */}
           <div className="location-chip">
-            <MapPin className="h-4 w-4 text-emerald-500" />
+            <MapPin className="h-4 w-4 text-blue-500" />
             <span>Citanduy, Tasikmalaya, Jawa Barat</span>
           </div>
         </main>
@@ -360,7 +360,7 @@ function App() {
         {/* Footer */}
         <footer className="home-footer">
           <div className="home-footer-inner">
-            <Sprout className="h-4 w-4 text-emerald-500" />
+            <Sprout className="h-4 w-4 text-blue-500" />
             <span>Created M Rijal Ramdani</span>
           </div>
         </footer>
