@@ -5,6 +5,7 @@ import AdminSettings from './components/AdminSettings';
 import { getAllAppSettings, getAllButtonSettings } from './lib/supabase';
 
 import CreditsScreen from './components/CreditsScreen';
+import SubscriptionNotification from './components/SubscriptionNotification';
 
 function App() {
   const [loadingPhase, setLoadingPhase] = useState<'loading' | 'credits' | 'done'>('loading');
@@ -365,6 +366,8 @@ function App() {
           </div>
         </footer>
       </div>
+
+      <SubscriptionNotification />
     </>
   );
 }
