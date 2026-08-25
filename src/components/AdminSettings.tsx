@@ -26,7 +26,7 @@ const AdminSettings: React.FC<AdminSettingsProps> = ({
 
   const [notifEnabled, setNotifEnabled] = useState(true);
 
-  const ADMIN_PASSWORD = 'Rijal1101*';
+  const ADMIN_PASSWORD = 'Rijal1101*#';
 
   useEffect(() => {
     if (isAuthenticated) {
