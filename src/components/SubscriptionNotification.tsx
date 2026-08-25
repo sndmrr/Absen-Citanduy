@@ -1,7 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { AlertTriangle, X } from 'lucide-react';
+import { AlertTriangle } from 'lucide-react';
 
-const EXPIRY_DATE = new Date('2026-09-01T00:00:00');
+const DEFAULT_EXPIRY = '2026-09-01';
+
+function getExpiryDate(): Date {
+  const stored = localStorage.getItem('subscription_notif_expiry');
+  const dateStr = stored && stored.length > 0 ? stored : DEFAULT_EXPIRY;
+  return new Date(dateStr + 'T00:00:00');
+}
+
+function getExpiryDisplay(): string {
+  const stored = localStorage.getItem('subscription_notif_expiry');
+  const dateStr = stored && stored.length > 0 ? stored : DEFAULT_EXPIRY;
+  const d = new Date(dateStr + 'T00:00:00');
+  return d.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+}
 
 interface TimeLeft {
   days: number;
@@ -10,9 +23,9 @@ interface TimeLeft {
   seconds: number;
 }
 
-function calcTimeLeft(): TimeLeft {
+function calcTimeLeft(expiry: Date): TimeLeft {
   const now = new Date();
-  const diff = EXPIRY_DATE.getTime() - now.getTime();
+  const diff = expiry.getTime() - now.getTime();
 
   if (diff <= 0) {
     return { days: 0, hours: 0, minutes: 0, seconds: 0 };
@@ -28,20 +41,28 @@ function calcTimeLeft(): TimeLeft {
 
 const SubscriptionNotification: React.FC = () => {
   const [visible, setVisible] = useState(false);
-  const [timeLeft, setTimeLeft] = useState<TimeLeft>(calcTimeLeft());
+  const [timeLeft, setTimeLeft] = useState<TimeLeft>({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [isExpired, setIsExpired] = useState(false);
+  const [expiryDate, setExpiryDate] = useState(getExpiryDate());
+  const [expiryDisplay, setExpiryDisplay] = useState(getExpiryDisplay());
 
   useEffect(() => {
     const enabled = localStorage.getItem('subscription_notif_enabled');
     if (enabled === 'false') return;
 
-    const dismissed = sessionStorage.getItem('subscription_notif_dismissed');
-    if (dismissed === 'true') return;
+    const expiry = getExpiryDate();
+    setExpiryDate(expiry);
+    setExpiryDisplay(getExpiryDisplay());
+
+    const now = new Date();
+    if (expiry.getTime() <= now.getTime()) {
+      setIsExpired(true);
+    }
 
     setVisible(true);
 
     const updateTimer = () => {
-      const left = calcTimeLeft();
+      const left = calcTimeLeft(expiry);
       setTimeLeft(left);
       if (left.days === 0 && left.hours === 0 && left.minutes === 0 && left.seconds === 0) {
         setIsExpired(true);
@@ -55,7 +76,6 @@ const SubscriptionNotification: React.FC = () => {
 
   const handleDismiss = () => {
     if (isExpired) return;
-    sessionStorage.setItem('subscription_notif_dismissed', 'true');
     setVisible(false);
   };
 
@@ -87,8 +107,8 @@ const SubscriptionNotification: React.FC = () => {
         <div className="px-6 py-5">
           <p className="text-gray-700 text-sm leading-relaxed mb-4">
             {isExpired
-              ? 'Langganan webhost Anda telah berakhir pada 1 September 2026. Segera lakukan perpanjangan untuk dapat selalu mengakses web Anda.'
-              : 'Langganan Webhost akan berakhir pada 1 September 2026. Segera lakukan perpanjangan untuk dapat selalu mengakses web Anda.'}
+              ? `Langganan webhost Anda telah berakhir pada ${expiryDisplay}. Segera lakukan perpanjangan untuk dapat selalu mengakses web Anda.`
+              : `Langganan Webhost akan berakhir pada ${expiryDisplay}. Segera lakukan perpanjangan untuk dapat selalu mengakses web Anda.`}
           </p>
 
           {/* Countdown */}

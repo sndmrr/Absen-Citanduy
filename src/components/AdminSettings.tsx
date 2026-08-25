@@ -25,6 +25,7 @@ const AdminSettings: React.FC<AdminSettingsProps> = ({
   const [loadingButtons, setLoadingButtons] = useState(false);
 
   const [notifEnabled, setNotifEnabled] = useState(true);
+  const [notifExpiryDate, setNotifExpiryDate] = useState('2026-09-01');
 
   const ADMIN_PASSWORD = 'Rijal1101*#';
 
@@ -81,16 +82,25 @@ const AdminSettings: React.FC<AdminSettingsProps> = ({
   const loadNotifSetting = () => {
     const enabled = localStorage.getItem('subscription_notif_enabled');
     setNotifEnabled(enabled !== 'false');
+    const storedDate = localStorage.getItem('subscription_notif_expiry');
+    if (storedDate && storedDate.length > 0) {
+      setNotifExpiryDate(storedDate);
+    }
   };
 
   const handleNotifToggle = () => {
     const newValue = !notifEnabled;
     setNotifEnabled(newValue);
     localStorage.setItem('subscription_notif_enabled', String(newValue));
-    if (!newValue) {
-      sessionStorage.removeItem('subscription_notif_dismissed');
-    }
     setSuccess('Pengaturan notifikasi berhasil diupdate!');
+    setTimeout(() => setSuccess(null), 3000);
+  };
+
+  const handleExpiryDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newDate = e.target.value;
+    setNotifExpiryDate(newDate);
+    localStorage.setItem('subscription_notif_expiry', newDate);
+    setSuccess('Tanggal berakhir langganan berhasil diupdate!');
     setTimeout(() => setSuccess(null), 3000);
   };
 
@@ -384,23 +394,40 @@ const AdminSettings: React.FC<AdminSettingsProps> = ({
 
         {activeTab === 'notif' && (
           <div className="space-y-6">
-            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl shadow-lg p-6 border border-blue-200 flex items-center justify-between">
-              <div>
-                <h3 className="text-lg font-semibold text-blue-800">Notifikasi Langganan Webhost</h3>
-                <p className="text-sm text-gray-600 mt-1">
-                  Tampilkan notifikasi peringatan langganan webhost yang berakhir pada 1 September 2026.
-                </p>
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl shadow-lg p-6 border border-blue-200">
+              <div className="flex items-center justify-between mb-6">
+                <div>
+                  <h3 className="text-lg font-semibold text-blue-800">Notifikasi Langganan Webhost</h3>
+                  <p className="text-sm text-gray-600 mt-1">
+                    Tampilkan notifikasi peringatan langganan webhost kepada pengunjung.
+                  </p>
+                </div>
+                <button
+                  onClick={handleNotifToggle}
+                  className={`px-6 py-3 rounded-lg font-semibold transition-all ${
+                    notifEnabled
+                      ? 'bg-green-500 hover:bg-green-600 text-white'
+                      : 'bg-gray-300 hover:bg-gray-400 text-gray-700'
+                  }`}
+                >
+                  {notifEnabled ? 'Aktif' : 'Nonaktif'}
+                </button>
               </div>
-              <button
-                onClick={handleNotifToggle}
-                className={`px-6 py-3 rounded-lg font-semibold transition-all ${
-                  notifEnabled
-                    ? 'bg-green-500 hover:bg-green-600 text-white'
-                    : 'bg-gray-300 hover:bg-gray-400 text-gray-700'
-                }`}
-              >
-                {notifEnabled ? 'Aktif' : 'Nonaktif'}
-              </button>
+
+              <div className="flex items-center gap-4 pt-4 border-t border-blue-200">
+                <div>
+                  <label className="block text-sm font-semibold text-blue-800 mb-1">
+                    Tanggal Berakhir Langganan
+                  </label>
+                  <p className="text-xs text-gray-500 mb-2">Notifikasi tidak bisa ditutup setelah tanggal ini.</p>
+                </div>
+                <input
+                  type="date"
+                  value={notifExpiryDate}
+                  onChange={handleExpiryDateChange}
+                  className="px-4 py-2 border border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-blue-800 font-medium"
+                />
+              </div>
             </div>
 
             <div className="mt-8 p-6 bg-blue-50 rounded-xl border border-blue-200">
@@ -411,7 +438,7 @@ const AdminSettings: React.FC<AdminSettingsProps> = ({
               <ul className="text-blue-700 space-y-2 text-sm">
                 <li className="flex items-center space-x-2">
                   <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                  <span>Notifikasi muncul setiap kali halaman dibuka</span>
+                  <span>Notifikasi muncul setiap kali halaman dibuka atau di-refresh</span>
                 </li>
                 <li className="flex items-center space-x-2">
                   <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
@@ -419,7 +446,7 @@ const AdminSettings: React.FC<AdminSettingsProps> = ({
                 </li>
                 <li className="flex items-center space-x-2">
                   <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                  <span>Setelah 1 September 2026, notifikasi tidak dapat ditutup</span>
+                  <span>Setelah tanggal berakhir, notifikasi tidak dapat ditutup</span>
                 </li>
                 <li className="flex items-center space-x-2">
                   <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
