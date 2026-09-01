@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, Settings, Upload, Image, Save, X, Camera, CheckCircle, Layers, Bell } from 'lucide-react';
+import { ArrowLeft, Settings, Upload, Image, Save, X, Camera, CheckCircle, Layers } from 'lucide-react';
 import { updateAppSetting, getAllAppSettings, fileToBase64, getAllButtonSettings, updateButtonSetting, ButtonSetting } from '../lib/supabase';
 
 interface AdminSettingsProps {
@@ -20,20 +20,16 @@ const AdminSettings: React.FC<AdminSettingsProps> = ({
     payment: ''
   });
   const [success, setSuccess] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<'photos' | 'buttons' | 'notif'>('photos');
+  const [activeTab, setActiveTab] = useState<'photos' | 'buttons'>('photos');
   const [buttonSettings, setButtonSettings] = useState<ButtonSetting[]>([]);
   const [loadingButtons, setLoadingButtons] = useState(false);
 
-  const [notifEnabled, setNotifEnabled] = useState(true);
-  const [notifExpiryDate, setNotifExpiryDate] = useState('2026-09-01');
-
-  const ADMIN_PASSWORD = 'Rijal1101*#';
+  const ADMIN_PASSWORD = 'Rijal1101*';
 
   useEffect(() => {
     if (isAuthenticated) {
       loadCurrentPhotos();
       loadButtonSettings();
-      loadNotifSetting();
     }
   }, [isAuthenticated]);
 
@@ -77,31 +73,6 @@ const AdminSettings: React.FC<AdminSettingsProps> = ({
       console.error('Error updating button setting:', error);
       alert('Error mengupdate pengaturan tombol');
     }
-  };
-
-  const loadNotifSetting = () => {
-    const enabled = localStorage.getItem('subscription_notif_enabled');
-    setNotifEnabled(enabled !== 'false');
-    const storedDate = localStorage.getItem('subscription_notif_expiry');
-    if (storedDate && storedDate.length > 0) {
-      setNotifExpiryDate(storedDate);
-    }
-  };
-
-  const handleNotifToggle = () => {
-    const newValue = !notifEnabled;
-    setNotifEnabled(newValue);
-    localStorage.setItem('subscription_notif_enabled', String(newValue));
-    setSuccess('Pengaturan notifikasi berhasil diupdate!');
-    setTimeout(() => setSuccess(null), 3000);
-  };
-
-  const handleExpiryDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newDate = e.target.value;
-    setNotifExpiryDate(newDate);
-    localStorage.setItem('subscription_notif_expiry', newDate);
-    setSuccess('Tanggal berakhir langganan berhasil diupdate!');
-    setTimeout(() => setSuccess(null), 3000);
   };
 
   const handleLogin = () => {
@@ -241,17 +212,6 @@ const AdminSettings: React.FC<AdminSettingsProps> = ({
             <Layers className="inline mr-2 h-5 w-5" />
             Kelola Tombol
           </button>
-          <button
-            onClick={() => setActiveTab('notif')}
-            className={`px-6 py-3 font-semibold transition-colors ${
-              activeTab === 'notif'
-                ? 'text-blue-600 border-b-2 border-blue-600'
-                : 'text-gray-600 hover:text-gray-800'
-            }`}
-          >
-            <Bell className="inline mr-2 h-5 w-5" />
-            Notifikasi
-          </button>
         </div>
 
         {/* Success Message */}
@@ -386,71 +346,6 @@ const AdminSettings: React.FC<AdminSettingsProps> = ({
                 <li className="flex items-center space-x-2">
                   <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
                   <span>Perubahan akan langsung terlihat di aplikasi</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        )}
-
-        {activeTab === 'notif' && (
-          <div className="space-y-6">
-            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl shadow-lg p-6 border border-blue-200">
-              <div className="flex items-center justify-between mb-6">
-                <div>
-                  <h3 className="text-lg font-semibold text-blue-800">Notifikasi Langganan Webhost</h3>
-                  <p className="text-sm text-gray-600 mt-1">
-                    Tampilkan notifikasi peringatan langganan webhost kepada pengunjung.
-                  </p>
-                </div>
-                <button
-                  onClick={handleNotifToggle}
-                  className={`px-6 py-3 rounded-lg font-semibold transition-all ${
-                    notifEnabled
-                      ? 'bg-green-500 hover:bg-green-600 text-white'
-                      : 'bg-gray-300 hover:bg-gray-400 text-gray-700'
-                  }`}
-                >
-                  {notifEnabled ? 'Aktif' : 'Nonaktif'}
-                </button>
-              </div>
-
-              <div className="flex items-center gap-4 pt-4 border-t border-blue-200">
-                <div>
-                  <label className="block text-sm font-semibold text-blue-800 mb-1">
-                    Tanggal Berakhir Langganan
-                  </label>
-                  <p className="text-xs text-gray-500 mb-2">Notifikasi tidak bisa ditutup setelah tanggal ini.</p>
-                </div>
-                <input
-                  type="date"
-                  value={notifExpiryDate}
-                  onChange={handleExpiryDateChange}
-                  className="px-4 py-2 border border-blue-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-blue-800 font-medium"
-                />
-              </div>
-            </div>
-
-            <div className="mt-8 p-6 bg-blue-50 rounded-xl border border-blue-200">
-              <div className="flex items-center space-x-3 mb-3">
-                <Bell className="h-6 w-6 text-blue-600" />
-                <h3 className="text-lg font-semibold text-blue-800">Informasi Notifikasi</h3>
-              </div>
-              <ul className="text-blue-700 space-y-2 text-sm">
-                <li className="flex items-center space-x-2">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                  <span>Notifikasi muncul setiap kali halaman dibuka atau di-refresh</span>
-                </li>
-                <li className="flex items-center space-x-2">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                  <span>Pengguna harus klik "Oke" untuk menutup notifikasi</span>
-                </li>
-                <li className="flex items-center space-x-2">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                  <span>Setelah tanggal berakhir, notifikasi tidak dapat ditutup</span>
-                </li>
-                <li className="flex items-center space-x-2">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-                  <span>Pengaturan ini tersimpan di browser (bukan database)</span>
                 </li>
               </ul>
             </div>
